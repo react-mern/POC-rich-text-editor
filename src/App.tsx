@@ -19,7 +19,15 @@ function App() {
 			<div className="bg-white container mx-auto rounded-md">
 				<Slate editor={editor} initialValue={initialValue}>
 					{/* editable component */}
-					<Editable />
+					<Editable
+						// when user inputs &, change it to 'and'
+						onKeyDown={(event) => {
+							if (event.key === "&") {
+								event.preventDefault();
+								editor.insertText("and");
+							}
+						}}
+					/>
 				</Slate>
 			</div>
 		</div>
