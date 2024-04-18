@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { Descendant, Editor, Element, Transforms, createEditor } from "slate";
+import { Descendant, createEditor } from "slate";
 import {
 	Editable,
 	RenderElementProps,
@@ -10,6 +10,8 @@ import {
 import CodeElement from "./components/CodeElement";
 import DefaultElement from "./components/DefaultElement";
 import Leaf from "./components/Leaf";
+import { CustomEditor } from "./custom-editor/custom-editor";
+import Toolbar from "./components/Toolbar";
 
 const initialValue: Descendant[] = [
 	{
@@ -42,6 +44,8 @@ function App() {
 			<div className="bg-white container mx-auto rounded-md">
 				{/* render the slate context, must be rendered above any editable components, it can provide editor state to other components like toolbars, menus */}
 				<Slate editor={editor} initialValue={initialValue}>
+					{/* Toolbar */}
+					<Toolbar editor={editor} />
 					{/* editable component */}
 					<Editable
 						renderElement={renderElement}
@@ -61,27 +65,14 @@ function App() {
 								case "`": {
 									event.preventDefault();
 
-									// determin whether any of currently selected blocks are code blocks
-									const [match] = Editor.nodes(editor, {
-										match: (n) => Element.isElement(n) && n.type === "code",
-									});
-
-									// toggle the block type depending on whether there's already a match
-									Transforms.setNodes(
-										editor,
-										{ type: match ? "paragraph" : "code" },
-										{
-											match: (n) =>
-												Element.isElement(n) && Editor.isBlock(editor, n),
-										}
-									);
+									CustomEditor.toggleCodeBlock(editor);
 									break;
 								}
 
 								// if "B" is pressed, bold the text in the selection
 								case "b": {
 									event.preventDefault();
-									Editor.addMark(editor, "bold", true);
+									CustomEditor.toggleBoldMark(editor);
 									break;
 								}
 							}
