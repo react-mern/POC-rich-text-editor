@@ -1,8 +1,15 @@
 import { useCallback, useState } from "react";
 import { Descendant, Editor, Element, Transforms, createEditor } from "slate";
-import { Editable, RenderElementProps, Slate, withReact } from "slate-react";
+import {
+	Editable,
+	RenderElementProps,
+	RenderLeafProps,
+	Slate,
+	withReact,
+} from "slate-react";
 import CodeElement from "./components/CodeElement";
 import DefaultElement from "./components/DefaultElement";
+import Leaf from "./components/Leaf";
 
 const initialValue: Descendant[] = [
 	{
@@ -25,6 +32,11 @@ function App() {
 		}
 	}, []);
 
+	// a memoized leaf rendering function
+	const renderLeaf = useCallback((props: RenderLeafProps) => {
+		return <Leaf {...props} />;
+	}, []);
+
 	return (
 		<div className="bg-sky-200 h-screen flex items-center justify-center">
 			<div className="bg-white container mx-auto rounded-md">
@@ -33,6 +45,7 @@ function App() {
 					{/* editable component */}
 					<Editable
 						renderElement={renderElement}
+						renderLeaf={renderLeaf}
 						// when user inputs &, change it to 'and'
 						onKeyDown={(event) => {
 							if (event.key === "&") {
@@ -40,24 +53,37 @@ function App() {
 								editor.insertText("and");
 							}
 
-							// if Ctrl+` is pressed, change mode to code and vice verse
-							if (event.key === "`" && event.ctrlKey) {
-								event.preventDefault();
+							if (!event.ctrlKey) {
+								return;
+							}
+							switch (event.key) {
+								// if "`" is pressed, change mode to code and vice verse
+								case "`": {
+									event.preventDefault();
 
-								// determin whether any of currently selected blocks are code blocks
-								const [match] = Editor.nodes(editor, {
-									match: (n) => Element.isElement(n) && n.type === "code",
-								});
+									// determin whether any of currently selected blocks are code blocks
+									const [match] = Editor.nodes(editor, {
+										match: (n) => Element.isElement(n) && n.type === "code",
+									});
 
-								// toggle the block type depending on whether there's already a match
-								Transforms.setNodes(
-									editor,
-									{ type: match ? "paragraph" : "code" },
-									{
-										match: (n) =>
-											Element.isElement(n) && Editor.isBlock(editor, n),
-									}
-								);
+									// toggle the block type depending on whether there's already a match
+									Transforms.setNodes(
+										editor,
+										{ type: match ? "paragraph" : "code" },
+										{
+											match: (n) =>
+												Element.isElement(n) && Editor.isBlock(editor, n),
+										}
+									);
+									break;
+								}
+
+								// if "B" is pressed, bold the text in the selection
+								case "b": {
+									event.preventDefault();
+									Editor.addMark(editor, "bold", true);
+									break;
+								}
 							}
 						}}
 					/>

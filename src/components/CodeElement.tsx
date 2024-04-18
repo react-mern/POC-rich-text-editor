@@ -1,6 +1,6 @@
 import { RenderElementProps } from "slate-react";
 
-const CodeElement = (props: RenderElementProps) => {
+const CodeElement: React.FC<RenderElementProps> = (props) => {
 	return (
 		<pre {...props.attributes}>
 			<code>{props.children}</code>
