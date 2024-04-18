@@ -1,13 +1,16 @@
+// TypeScript users only add this code
 import { BaseEditor } from "slate";
 import { ReactEditor } from "slate-react";
 
-type CustomElemnt = { type: "paragraph"; children: CustomText[] };
+type CustomElement =
+	| { type: "paragraph"; children: CustomText[] }
+	| { type: "code"; children: CustomText[] };
 type CustomText = { text: string };
 
 declare module "slate" {
 	interface CustomTypes {
 		Editor: BaseEditor & ReactEditor;
-		Element: CustomElemnt;
+		Element: CustomElement;
 		Text: CustomText;
 	}
 }
