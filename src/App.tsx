@@ -1,5 +1,3 @@
-import { useCallback, useState } from "react";
-import { Descendant, createEditor } from "slate";
 import {
 	Editable,
 	RenderElementProps,
@@ -7,22 +5,22 @@ import {
 	Slate,
 	withReact,
 } from "slate-react";
+import { useCallback, useState } from "react";
+import { Descendant, createEditor } from "slate";
+
+import Leaf from "./components/Leaf";
+import Toolbar from "./components/Toolbar";
+import useContent from "./hooks/useContent";
 import CodeElement from "./components/CodeElement";
 import DefaultElement from "./components/DefaultElement";
-import Leaf from "./components/Leaf";
 import { CustomEditor } from "./custom-editor/custom-editor";
-import Toolbar from "./components/Toolbar";
-
-const initialValue: Descendant[] = [
-	{
-		type: "paragraph",
-		children: [{ text: "A line of text in a paragraph" }],
-	},
-];
 
 function App() {
 	// to make editor to be stable across renders, we use useState without a setter
 	const [editor] = useState(() => withReact(createEditor()));
+	const [content, storeContent] = useContent();
+	// fetching data from localStorage if available
+	const initialValue: Descendant[] = content;
 
 	// defining a rendering function based on the element passed to 'props', useCallback here to memoize the function for subsequent renders.
 	const renderElement = useCallback((props: RenderElementProps) => {
@@ -42,8 +40,14 @@ function App() {
 	return (
 		<div className="bg-sky-200 h-screen flex items-center justify-center">
 			<div className="bg-white container mx-auto rounded-md">
-				{/* render the slate context, must be rendered above any editable components, it can provide editor state to other components like toolbars, menus */}
-				<Slate editor={editor} initialValue={initialValue}>
+				{/* render the slate context, must be rendered above any editable components,
+				 it can provide editor state to other components like toolbars, menus */}
+				<Slate
+					editor={editor}
+					initialValue={initialValue}
+					// store value to localStorage on change
+					onChange={(value) => storeContent(value, editor)}
+				>
 					{/* Toolbar */}
 					<Toolbar editor={editor} />
 					{/* editable component */}
