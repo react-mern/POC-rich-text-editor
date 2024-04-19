@@ -1,5 +1,6 @@
 import { forwardRef, PropsWithChildren, Ref } from "react";
-import { BaseProps } from "../../types";
+
+import { BaseProps } from "../../../types";
 
 // components to for menu which consists formatting buttons
 const Menu = forwardRef(

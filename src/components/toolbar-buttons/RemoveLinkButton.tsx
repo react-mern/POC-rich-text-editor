@@ -1,8 +1,8 @@
 import { useSlate } from "slate-react";
 
-import { Icon } from "./Icon";
-import { Button } from "./Button";
-import { CustomEditor } from "../custom-editor/custom-editor";
+import { Icon } from "../common/Icon";
+import { Button } from "../common/Button";
+import { CustomEditor } from "../../custom-editor/custom-editor";
 
 // toolbar button to remove link
 const RemoveLinkButton = () => {

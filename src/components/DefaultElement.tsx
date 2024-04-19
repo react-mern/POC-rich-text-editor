@@ -1,4 +1,4 @@
-import { RenderElementProps } from "slate-react";
+import { RenderElementProps, useSelected } from "slate-react";
 
 // component to return block html elements
 const Element: React.FC<RenderElementProps> = ({
@@ -6,6 +6,8 @@ const Element: React.FC<RenderElementProps> = ({
 	children,
 	element,
 }) => {
+	const selected = useSelected();
+
 	switch (element.type) {
 		case "block-quote":
 			return (
@@ -77,6 +79,26 @@ const Element: React.FC<RenderElementProps> = ({
 				>
 					{children}
 				</a>
+			);
+		case "button":
+			return (
+				<span
+					{...attributes}
+					onClick={(event) => event.preventDefault()}
+					className="my-0 mx-1 bg-neutral-200 py-0.5 px-1 border rounded-md text-base"
+				>
+					{children}
+				</span>
+			);
+		case "badge":
+			return (
+				<span
+					{...attributes}
+					contentEditable={false}
+					className={`bg-green-500 text-white py-0.5 px-1 rounded-md text-base ${selected}`}
+				>
+					{children}
+				</span>
 			);
 		default:
 			return <p {...attributes}>{children}</p>;

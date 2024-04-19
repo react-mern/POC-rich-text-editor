@@ -46,6 +46,36 @@ const useContent = () => {
 					type: "paragraph",
 					children: [
 						{
+							text: "In addition to block nodes, you can create inline nodes. Here is a ",
+						},
+						{
+							type: "link",
+							url: "https://en.wikipedia.org/wiki/Hypertext",
+							children: [{ text: "hyperlink" }],
+						},
+						{
+							text: ", and here is a more unusual inline: an ",
+						},
+						{
+							type: "button",
+							children: [{ text: "editable button" }],
+						},
+						{
+							text: "! Here is a read-only inline: ",
+						},
+						{
+							type: "badge",
+							children: [{ text: "Approved" }],
+						},
+						{
+							text: ".",
+						},
+					],
+				},
+				{
+					type: "paragraph",
+					children: [
+						{
 							text: "There are two ways to add links. You can either add a link via the toolbar icon above, or if you want in on a little secret, copy a URL to your keyboard and paste it while a range of text is selected. ",
 						},
 						// The following is an example of an inline at the end of a block.

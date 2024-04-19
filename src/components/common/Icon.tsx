@@ -1,5 +1,6 @@
 import { forwardRef, PropsWithChildren, Ref } from "react";
-import { BaseProps } from "../../types";
+
+import { BaseProps } from "../../../types";
 
 // common icon components
 export const Icon = forwardRef(

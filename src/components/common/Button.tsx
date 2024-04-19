@@ -1,5 +1,6 @@
 import { Ref, PropsWithChildren, forwardRef } from "react";
-import { BaseProps } from "../../types";
+
+import { BaseProps } from "../../../types";
 
 // common button component
 export const Button = forwardRef(

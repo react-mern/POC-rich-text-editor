@@ -1,6 +1,6 @@
 import { forwardRef, PropsWithChildren, Ref } from "react";
 import { BaseProps } from "../../types";
-import Menu from "./Menu";
+import Menu from "./common/Menu";
 
 const Toolbar = forwardRef(
 	(

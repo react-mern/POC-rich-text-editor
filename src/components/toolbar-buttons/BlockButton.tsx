@@ -1,7 +1,9 @@
 import { useSlate } from "slate-react";
-import { Button } from "./Button";
-import { CustomEditor, TEXT_ALIGN_TYPES } from "../custom-editor/custom-editor";
-import { Icon } from "./Icon";
+
+import { Icon } from "../common/Icon";
+import { Button } from "../common/Button";
+import { TEXT_ALIGN_TYPES } from "../../custom-editor/block";
+import { CustomEditor } from "../../custom-editor/custom-editor";
 
 interface BlockButtonProps {
 	format: string;
@@ -14,14 +16,14 @@ const BlockButton: React.FC<BlockButtonProps> = ({ format, icon }) => {
 
 	return (
 		<Button
-			active={CustomEditor.isBlockActive(
+			active={CustomEditor.block.isBlockActive(
 				editor,
 				format,
 				TEXT_ALIGN_TYPES.includes(format) ? "align" : "type"
 			)}
 			onMouseDown={(event: KeyboardEvent) => {
 				event.preventDefault();
-				CustomEditor.toggleBlock(editor, format);
+				CustomEditor.block.toggleBlock(editor, format);
 			}}
 		>
 			<Icon>{icon}</Icon>

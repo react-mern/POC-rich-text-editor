@@ -1,7 +1,8 @@
 import { useSlate } from "slate-react";
-import { Button } from "./Button";
-import { CustomEditor } from "../custom-editor/custom-editor";
-import { Icon } from "./Icon";
+
+import { Icon } from "../common/Icon";
+import { Button } from "../common/Button";
+import { CustomEditor } from "../../custom-editor/custom-editor";
 
 interface MarkButtonProps {
 	format: string;
@@ -13,10 +14,10 @@ const MarkButton: React.FC<MarkButtonProps> = ({ format, icon }) => {
 	const editor = useSlate();
 	return (
 		<Button
-			active={CustomEditor.isMarkActive(editor, format)}
+			active={CustomEditor.mark.isMarkActive(editor, format)}
 			onMouseDown={(event: KeyboardEvent) => {
 				event.preventDefault();
-				CustomEditor.toggleMark(editor, format);
+				CustomEditor.mark.toggleMark(editor, format);
 			}}
 		>
 			<Icon>{icon}</Icon>
