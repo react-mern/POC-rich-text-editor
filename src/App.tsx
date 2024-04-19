@@ -11,25 +11,31 @@ import { Descendant, createEditor } from "slate";
 import Leaf from "./components/Leaf";
 import Toolbar from "./components/Toolbar";
 import useContent from "./hooks/useContent";
-import CodeElement from "./components/CodeElement";
 import DefaultElement from "./components/DefaultElement";
+import isHotkey from "is-hotkey";
 import { CustomEditor } from "./custom-editor/custom-editor";
+import MarkButton from "./components/MarkButton";
+import BlockButton from "./components/BlockButton";
+
+const HOTKEYS: { [key: string]: string } = {
+	"mod+b": "bold",
+	"mob+i": "italic",
+	"mod+u": "underline",
+	"mod+`": "code",
+};
 
 function App() {
 	// to make editor to be stable across renders, we use useState without a setter
 	const [editor] = useState(() => withReact(createEditor()));
 	const [content, storeContent] = useContent();
+
 	// fetching data from localStorage if available
 	const initialValue: Descendant[] = content;
 
-	// defining a rendering function based on the element passed to 'props', useCallback here to memoize the function for subsequent renders.
+	// defining a rendering function based on the element passed to 'props',
+	// useCallback here to memoize the function for subsequent renders.
 	const renderElement = useCallback((props: RenderElementProps) => {
-		switch (props.element.type) {
-			case "code":
-				return <CodeElement {...props} />;
-			default:
-				return <DefaultElement {...props} />;
-		}
+		return <DefaultElement {...props} />;
 	}, []);
 
 	// a memoized leaf rendering function
@@ -49,39 +55,42 @@ function App() {
 					onChange={(value) => storeContent(value, editor)}
 				>
 					{/* Toolbar */}
-					<Toolbar editor={editor} />
+					<Toolbar>
+						<MarkButton format="bold" icon="format_bold" />
+						<MarkButton format="italic" icon="format_italic" />
+						<MarkButton format="underline" icon="format_underlined" />
+						<MarkButton format="code" icon="code" />
+						<BlockButton format="heading-one" icon="looks_one" />
+						<BlockButton format="heading-two" icon="looks_two" />
+						<BlockButton format="block-quote" icon="format_quote" />
+						<BlockButton format="bulleted-list" icon="format_list_bulleted" />
+						<BlockButton format="numbered-list" icon="format_list_numbered" />
+						<BlockButton format="left" icon="format_align_left" />
+						<BlockButton format="center" icon="format_align_center" />
+						<BlockButton format="right" icon="format_align_right" />
+						<BlockButton format="justify" icon="format_align_justify" />
+					</Toolbar>
 					{/* editable component */}
-					<Editable
-						renderElement={renderElement}
-						renderLeaf={renderLeaf}
-						// when user inputs &, change it to 'and'
-						onKeyDown={(event) => {
-							if (event.key === "&") {
-								event.preventDefault();
-								editor.insertText("and");
-							}
-
-							if (!event.ctrlKey) {
-								return;
-							}
-							switch (event.key) {
-								// if "`" is pressed, change mode to code and vice verse
-								case "`": {
-									event.preventDefault();
-
-									CustomEditor.toggleCodeBlock(editor);
-									break;
+					<div className="p-3 focus-within:ring-2 focus-within:ring-neutral-200 focus-within:ring-inset border">
+						<Editable
+							spellCheck
+							autoFocus
+							className="h-[50vh] outline-none"
+							renderElement={renderElement}
+							renderLeaf={renderLeaf}
+							// when user inputs &, change it to 'and'
+							onKeyDown={(event) => {
+								if (!event.ctrlKey) return false;
+								for (const hotkey in HOTKEYS) {
+									if (isHotkey(hotkey, event)) {
+										event.preventDefault();
+										const mark = HOTKEYS[hotkey];
+										CustomEditor.toggleMark(editor, mark);
+									}
 								}
-
-								// if "B" is pressed, bold the text in the selection
-								case "b": {
-									event.preventDefault();
-									CustomEditor.toggleBoldMark(editor);
-									break;
-								}
-							}
-						}}
-					/>
+							}}
+						/>
+					</div>
 				</Slate>
 			</div>
 		</div>

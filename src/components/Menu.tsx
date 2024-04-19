@@ -1,20 +1,21 @@
 import { forwardRef, PropsWithChildren, Ref } from "react";
 import { BaseProps } from "../../types";
-import Menu from "./Menu";
 
-const Toolbar = forwardRef(
+// components to for menu which consists formatting buttons
+const Menu = forwardRef(
 	(
 		{ className, ...props }: PropsWithChildren<BaseProps>,
 		ref: Ref<HTMLDivElement>
 	) => {
 		return (
-			<Menu
+			<div
 				{...props}
+				data-text-id="menu"
 				ref={ref}
-				className={`${className} relative py-1 px-5 border`}
+				className={`${className} gap-x-3 flex items-center py-2`}
 			/>
 		);
 	}
 );
 
-export default Toolbar;
+export default Menu;

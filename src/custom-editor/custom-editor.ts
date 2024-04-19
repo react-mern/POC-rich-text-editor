@@ -1,33 +1,87 @@
-import { Editor, Element, type Editor as EditorType, Transforms } from "slate";
+import { Editor, Element, Transforms } from "slate";
+import { ElementTypes, TextAlign } from "../types";
 
+export const LIST_TYPES = ["numbered-list", "bulleted-list"];
+export const TEXT_ALIGN_TYPES = ["left", "right", "center", "justify"];
+
+// this consists functions to handler editor updates
 export const CustomEditor = {
-	isBoldMarkActive(editor: EditorType) {
+	// function to check is mark mode (block, italic, underline) active
+	isMarkActive(editor: Editor, format: string) {
 		const marks = Editor.marks(editor);
-		return marks ? marks.bold === true : false;
+		return marks ? marks[format] === true : false;
 	},
 
-	isCodeBlockActive(editor: EditorType) {
-		const [match] = Editor.nodes(editor, {
-			match: (n) => Element.isElement(n) && n.type === "code",
-		});
+	// function to check is block mode active (h1, h1, ol, ul)
+	isBlockActive(
+		editor: Editor,
+		format: string,
+		blockType: "align" | "type" = "type"
+	) {
+		const { selection } = editor;
+		if (!selection) return false;
+
+		const [match] = Array.from(
+			Editor.nodes(editor, {
+				at: Editor.unhangRange(editor, selection),
+				match: (n) =>
+					!Editor.isEditor(n) &&
+					Element.isElement(n) &&
+					n[blockType] === format,
+			})
+		);
 
 		return !!match;
 	},
 
-	toggleBoldMark(editor: EditorType) {
-		const isActive = CustomEditor.isBoldMarkActive(editor);
+	toggleMark(editor: Editor, format: string) {
+		const isActive = CustomEditor.isMarkActive(editor, format);
+
 		if (isActive) {
-			Editor.removeMark(editor, "bold");
+			Editor.removeMark(editor, format);
 		} else {
-			Editor.addMark(editor, "bold", true);
+			Editor.addMark(editor, format, true);
 		}
 	},
-	toggleCodeBlock(editor: EditorType) {
-		const isActive = CustomEditor.isCodeBlockActive(editor);
-		Transforms.setNodes(
+
+	toggleBlock(editor: Editor, format: string) {
+		const isActive = CustomEditor.isBlockActive(
 			editor,
-			{ type: isActive ? undefined : "code" },
-			{ match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
+			format,
+			TEXT_ALIGN_TYPES.includes(format) ? "align" : "type"
 		);
+
+		const isList = LIST_TYPES.includes(format);
+
+		Transforms.unwrapNodes(editor, {
+			match: (n) =>
+				!Editor.isEditor(n) &&
+				Element.isElement(n) &&
+				LIST_TYPES.includes(n.type) &&
+				!TEXT_ALIGN_TYPES.includes(format),
+			split: true,
+		});
+
+		let newProperties: Partial<Element>;
+		if (TEXT_ALIGN_TYPES.includes(format)) {
+			newProperties = {
+				align: isActive ? undefined : (format as TextAlign),
+			};
+		} else {
+			newProperties = {
+				type: isActive
+					? "paragraph"
+					: isList
+					? "list-item"
+					: (format as ElementTypes),
+			};
+		}
+		Transforms.setNodes<Element>(editor, newProperties);
+
+		if (!isActive && isList) {
+			const block = { type: format, children: [] };
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			Transforms.wrapNodes(editor, block as any);
+		}
 	},
 };
