@@ -68,6 +68,16 @@ const Element: React.FC<RenderElementProps> = ({
 					{children}
 				</p>
 			);
+		case "link":
+			return (
+				<a
+					{...attributes}
+					href={element.url}
+					className="underline text-blue-400"
+				>
+					{children}
+				</a>
+			);
 		default:
 			return <p {...attributes}>{children}</p>;
 	}
