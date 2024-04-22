@@ -8,12 +8,13 @@ import useContent from "./hooks/useContent";
 import { withImages } from "./lib/withImages";
 import { withInlines } from "./lib/withInlines";
 import EditorComponent from "./components/Editor";
+import { withCheckLists } from "./lib/withCheckLists";
 import DefaultElement from "./components/DefaultElement";
 
 function App() {
 	// to make editor to be stable across renders, we use useState without a setter
 	const [editor] = useState(() =>
-		withHtml(withInlines(withImages(withReact(createEditor()))))
+		withHtml(withCheckLists(withInlines(withImages(withReact(createEditor())))))
 	);
 	const [content] = useContent();
 

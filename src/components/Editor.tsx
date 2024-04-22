@@ -48,23 +48,34 @@ const EditorComponent: React.FC<EditorProps> = ({
 		>
 			{/* Toolbar */}
 			<Toolbar>
-				<MarkButton format="bold" icon="format_bold" />
-				<MarkButton format="italic" icon="format_italic" />
-				<MarkButton format="underline" icon="format_underlined" />
-				<MarkButton format="code" icon="code" />
-				<BlockButton format="heading-one" icon="looks_one" />
-				<BlockButton format="heading-two" icon="looks_two" />
-				<BlockButton format="block-quote" icon="format_quote" />
-				<BlockButton format="bulleted-list" icon="format_list_bulleted" />
-				<BlockButton format="numbered-list" icon="format_list_numbered" />
-				<BlockButton format="left" icon="format_align_left" />
-				<BlockButton format="center" icon="format_align_center" />
-				<BlockButton format="right" icon="format_align_right" />
-				<BlockButton format="justify" icon="format_align_justify" />
-				<AddLinkButton />
-				<RemoveLinkButton />
-				<ToggleEditableButton />
-				<InsertImageButton />
+				<div className="flex flex-row gap-x-3 border-r pr-2">
+					<MarkButton format="bold" icon="format_bold" />
+					<MarkButton format="italic" icon="format_italic" />
+					<MarkButton format="underline" icon="format_underlined" />
+					<MarkButton format="code" icon="code" />
+				</div>
+				<div className="flex flex-row gap-x-3 border-r pr-2">
+					<BlockButton format="heading-one" icon="looks_one" />
+					<BlockButton format="heading-two" icon="looks_two" />
+					<BlockButton format="block-quote" icon="format_quote" />
+				</div>
+				<div className="flex flex-row gap-x-3 border-r pr-2">
+					<BlockButton format="bulleted-list" icon="format_list_bulleted" />
+					<BlockButton format="numbered-list" icon="format_list_numbered" />
+					<BlockButton format="check-list-item" icon="check_box" />
+				</div>
+				<div className="flex flex-row gap-x-3 border-r pr-2">
+					<BlockButton format="left" icon="format_align_left" />
+					<BlockButton format="center" icon="format_align_center" />
+					<BlockButton format="right" icon="format_align_right" />
+					<BlockButton format="justify" icon="format_align_justify" />
+				</div>
+				<div className="flex flex-row gap-x-3 border-r pr-2">
+					<AddLinkButton />
+					<RemoveLinkButton />
+					<ToggleEditableButton />
+					<InsertImageButton />
+				</div>
 			</Toolbar>
 			<HoveringToolbar />
 			{/* editable component */}

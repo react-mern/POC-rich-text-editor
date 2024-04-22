@@ -13,7 +13,7 @@ const Menu = forwardRef(
 				{...props}
 				data-text-id="menu"
 				ref={ref}
-				className={`${className} gap-x-3 flex items-center py-2`}
+				className={`${className} gap-3 flex items-center flex-wrap py-2`}
 			/>
 		);
 	}

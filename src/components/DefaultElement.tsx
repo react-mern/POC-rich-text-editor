@@ -1,6 +1,7 @@
 import { RenderElementProps, useSelected } from "slate-react";
 
 import Image from "./render-elements/Image";
+import CheckListItemElement from "./render-elements/CheckListItemElement";
 
 // component to return block html elements
 const Element: React.FC<RenderElementProps> = ({
@@ -105,6 +106,14 @@ const Element: React.FC<RenderElementProps> = ({
 		case "image":
 			return (
 				<Image attributes={attributes} children={children} element={element} />
+			);
+		case "check-list-item":
+			return (
+				<CheckListItemElement
+					attributes={attributes}
+					children={children}
+					element={element}
+				/>
 			);
 		default:
 			return <p {...attributes}>{children}</p>;
