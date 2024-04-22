@@ -1,7 +1,8 @@
-import { RenderElementProps, useSelected } from "slate-react";
+import { RenderElementProps } from "slate-react";
 
 import Image from "./render-elements/Image";
 import CheckListItemElement from "./render-elements/CheckListItemElement";
+import Badge from "./render-elements/Badge";
 
 // component to return block html elements
 const Element: React.FC<RenderElementProps> = ({
@@ -9,8 +10,6 @@ const Element: React.FC<RenderElementProps> = ({
 	children,
 	element,
 }) => {
-	const selected = useSelected();
-
 	switch (element.type) {
 		case "block-quote":
 			return (
@@ -95,13 +94,7 @@ const Element: React.FC<RenderElementProps> = ({
 			);
 		case "badge":
 			return (
-				<span
-					{...attributes}
-					contentEditable={false}
-					className={`bg-green-500 text-white py-0.5 px-1 rounded-md text-base ${selected}`}
-				>
-					{children}
-				</span>
+				<Badge attributes={attributes} children={children} element={element} />
 			);
 		case "image":
 			return (

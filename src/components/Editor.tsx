@@ -16,6 +16,7 @@ import AddLinkButton from "./toolbar-buttons/AddLinkButton";
 import { CustomEditor } from "../custom-editor/custom-editor";
 import RemoveLinkButton from "./toolbar-buttons/RemoveLinkButton";
 import InsertImageButton from "./toolbar-buttons/InsertImageButton";
+import InsertBadgeButton from "./toolbar-buttons/InsertBadgeButton";
 import ToggleEditableButton from "./toolbar-buttons/ToggleEditableButton";
 
 const HOTKEYS: { [key: string]: string } = {
@@ -74,6 +75,7 @@ const EditorComponent: React.FC<EditorProps> = ({
 					<AddLinkButton />
 					<RemoveLinkButton />
 					<ToggleEditableButton />
+					<InsertBadgeButton />
 					<InsertImageButton />
 				</div>
 			</Toolbar>

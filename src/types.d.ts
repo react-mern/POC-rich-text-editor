@@ -66,7 +66,11 @@ export type ImageELement = {
 
 export type ButtonElement = { type: "button"; children: Descendant[] };
 
-export type BadgeElement = { type: "badge"; children: Descendant[] };
+export type BadgeElement = {
+	type: "badge";
+	children: Descendant[];
+	variant: "success" | "error" | "info";
+};
 
 export type ListItemElement = {
 	type: "list-item";
