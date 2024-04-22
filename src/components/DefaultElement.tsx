@@ -1,5 +1,7 @@
 import { RenderElementProps, useSelected } from "slate-react";
 
+import Image from "./render-elements/Image";
+
 // component to return block html elements
 const Element: React.FC<RenderElementProps> = ({
 	attributes,
@@ -99,6 +101,10 @@ const Element: React.FC<RenderElementProps> = ({
 				>
 					{children}
 				</span>
+			);
+		case "image":
+			return (
+				<Image attributes={attributes} children={children} element={element} />
 			);
 		default:
 			return <p {...attributes}>{children}</p>;

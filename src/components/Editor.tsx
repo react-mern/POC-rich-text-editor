@@ -14,6 +14,7 @@ import BlockButton from "./toolbar-buttons/BlockButton";
 import AddLinkButton from "./toolbar-buttons/AddLinkButton";
 import { CustomEditor } from "../custom-editor/custom-editor";
 import RemoveLinkButton from "./toolbar-buttons/RemoveLinkButton";
+import InsertImageButton from "./toolbar-buttons/InsertImageButton";
 import ToggleEditableButton from "./toolbar-buttons/ToggleEditableButton";
 
 const HOTKEYS: { [key: string]: string } = {
@@ -62,6 +63,7 @@ const EditorComponent: React.FC<EditorProps> = ({
 				<AddLinkButton />
 				<RemoveLinkButton />
 				<ToggleEditableButton />
+				<InsertImageButton />
 			</Toolbar>
 			{/* editable component */}
 			<div className="p-3 focus-within:ring-2 focus-within:ring-neutral-200 focus-within:ring-inset border">
@@ -96,6 +98,11 @@ const EditorComponent: React.FC<EditorProps> = ({
 								Transforms.move(editor, { unit: "offset" });
 								return;
 							}
+						}
+
+						if (isHotkey("mod+a", event)) {
+							event.preventDefault();
+							Transforms.select(editor, []);
 						}
 					}}
 				/>

@@ -7,10 +7,13 @@ import useContent from "./hooks/useContent";
 import { withInlines } from "./lib/withInlines";
 import EditorComponent from "./components/Editor";
 import DefaultElement from "./components/DefaultElement";
+import { withImages } from "./lib/withImages";
 
 function App() {
 	// to make editor to be stable across renders, we use useState without a setter
-	const [editor] = useState(() => withInlines(withReact(createEditor())));
+	const [editor] = useState(() =>
+		withInlines(withImages(withReact(createEditor())))
+	);
 	const [content] = useContent();
 
 	// fetching data from localStorage if available
@@ -28,8 +31,8 @@ function App() {
 	}, []);
 
 	return (
-		<div className="bg-sky-200 h-screen flex items-center justify-center">
-			<div className="bg-white container mx-auto rounded-md">
+		<div className="bg-sky-200 flex flex-col">
+			<div className="bg-white container mx-auto rounded-md my-10">
 				{/* render the slate context, must be rendered above any editable components,
 				 it can provide editor state to other components like toolbars, menus */}
 				<EditorComponent

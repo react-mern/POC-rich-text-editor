@@ -10,7 +10,7 @@ const AddLinkButton = () => {
 	return (
 		<Button
 			active={CustomEditor.link.isLinkActive(editor)}
-			onMouseDown={(event: KeyboardEvent) => {
+			onMouseDown={(event: MouseEvent) => {
 				event?.preventDefault();
 				const url = window.prompt("Enter URL of the link");
 				if (!url) return;

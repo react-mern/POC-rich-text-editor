@@ -21,7 +21,7 @@ const BlockButton: React.FC<BlockButtonProps> = ({ format, icon }) => {
 				format,
 				TEXT_ALIGN_TYPES.includes(format) ? "align" : "type"
 			)}
-			onMouseDown={(event: KeyboardEvent) => {
+			onMouseDown={(event: MouseEvent) => {
 				event.preventDefault();
 				CustomEditor.block.toggleBlock(editor, format);
 			}}

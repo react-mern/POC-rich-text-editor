@@ -9,7 +9,7 @@ const ToggleEditableButton = () => {
 	return (
 		<Button
 			active
-			onMouseDown={(event: KeyboardEvent) => {
+			onMouseDown={(event: MouseEvent) => {
 				event.preventDefault();
 				if (CustomEditor.editableButton.isButtonActive(editor)) {
 					CustomEditor.editableButton.unwrapButton(editor);

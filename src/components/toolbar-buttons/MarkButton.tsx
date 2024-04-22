@@ -15,7 +15,7 @@ const MarkButton: React.FC<MarkButtonProps> = ({ format, icon }) => {
 	return (
 		<Button
 			active={CustomEditor.mark.isMarkActive(editor, format)}
-			onMouseDown={(event: KeyboardEvent) => {
+			onMouseDown={(event: MouseEvent) => {
 				event.preventDefault();
 				CustomEditor.mark.toggleMark(editor, format);
 			}}
