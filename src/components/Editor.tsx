@@ -9,6 +9,7 @@ import { Range, Transforms, Editor, Descendant } from "slate";
 
 import Toolbar from "./Toolbar";
 import useContent from "../hooks/useContent";
+import HoveringToolbar from "./HoveringToolbar";
 import MarkButton from "./toolbar-buttons/MarkButton";
 import BlockButton from "./toolbar-buttons/BlockButton";
 import AddLinkButton from "./toolbar-buttons/AddLinkButton";
@@ -65,6 +66,7 @@ const EditorComponent: React.FC<EditorProps> = ({
 				<ToggleEditableButton />
 				<InsertImageButton />
 			</Toolbar>
+			<HoveringToolbar />
 			{/* editable component */}
 			<div className="p-3 focus-within:ring-2 focus-within:ring-neutral-200 focus-within:ring-inset border">
 				<Editable
@@ -103,6 +105,19 @@ const EditorComponent: React.FC<EditorProps> = ({
 						if (isHotkey("mod+a", event)) {
 							event.preventDefault();
 							Transforms.select(editor, []);
+						}
+					}}
+					onDOMBeforeInput={(event: InputEvent) => {
+						switch (event.inputType) {
+							case "fomartBold":
+								event.preventDefault();
+								return CustomEditor.mark.toggleMark(editor, "bold");
+							case "formatItalic":
+								event.preventDefault();
+								return CustomEditor.mark.toggleMark(editor, "italic");
+							case "formatUnderline":
+								event.preventDefault();
+								return CustomEditor.mark.toggleMark(editor, "underlined");
 						}
 					}}
 				/>
