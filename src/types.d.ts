@@ -163,6 +163,7 @@ export type CustomText = {
 	italic?: boolean;
 	underline?: boolean;
 	code?: boolean;
+	highlight?: boolean;
 	[key: string]: unknown;
 };
 

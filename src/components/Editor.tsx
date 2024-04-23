@@ -4,27 +4,26 @@ import {
 	RenderLeafProps,
 	Slate,
 } from "slate-react";
-import isHotkey, { isKeyHotkey } from "is-hotkey";
-import { Range, Transforms, Editor, Descendant } from "slate";
+import { useCallback, useState } from "react";
+import { Editor, Descendant, NodeEntry, Text, Path } from "slate";
 
+import {
+	modifyInlineCursor,
+	selectText,
+	toggleMarkFromKb,
+} from "../utils/keydown-handlers";
 import Toolbar from "./Toolbar";
 import useContent from "../hooks/useContent";
 import HoveringToolbar from "./HoveringToolbar";
 import MarkButton from "./toolbar-buttons/MarkButton";
 import BlockButton from "./toolbar-buttons/BlockButton";
+import SearchInput from "./toolbar-buttons/SearchInput";
 import AddLinkButton from "./toolbar-buttons/AddLinkButton";
 import { CustomEditor } from "../custom-editor/custom-editor";
 import RemoveLinkButton from "./toolbar-buttons/RemoveLinkButton";
 import InsertImageButton from "./toolbar-buttons/InsertImageButton";
 import InsertBadgeButton from "./toolbar-buttons/InsertBadgeButton";
 import ToggleEditableButton from "./toolbar-buttons/ToggleEditableButton";
-
-const HOTKEYS: { [key: string]: string } = {
-	"mod+b": "bold",
-	"mob+i": "italic",
-	"mod+u": "underline",
-	"mod+`": "code",
-};
 
 interface EditorProps {
 	initialValue: Descendant[];
@@ -33,6 +32,17 @@ interface EditorProps {
 	renderLeaf: (props: RenderLeafProps) => JSX.Element;
 }
 
+type Range = {
+	anchor: {
+		path: Path;
+		offset: number;
+	};
+	focus: { path: Path; offset: number };
+	highlight: boolean;
+};
+
+type Ranges = Range[];
+
 const EditorComponent: React.FC<EditorProps> = ({
 	editor,
 	initialValue,
@@ -40,6 +50,41 @@ const EditorComponent: React.FC<EditorProps> = ({
 	renderLeaf,
 }) => {
 	const [, storeContent] = useContent();
+
+	// search input state
+	const [search, setSearch] = useState<string | undefined>("");
+
+	// function to decorate searched text
+	const decorate = useCallback(
+		([node, path]: NodeEntry) => {
+			const ranges: Ranges = [];
+			// if search text and node implement Text interface
+			if (search && Text.isText(node)) {
+				// extracting text from node
+				const { text } = node;
+
+				// splitting text according to search
+				const parts = text.split(search);
+				let offset = 0;
+
+				parts.forEach((part, i) => {
+					// adding parts to ranges for highlighting using anchor and focus
+					if (i !== 0) {
+						ranges.push({
+							anchor: { path, offset: offset - search.length },
+							focus: { path, offset },
+							highlight: true,
+						});
+					}
+
+					offset = offset + part.length + search.length;
+				});
+			}
+			return ranges;
+		},
+		[search]
+	);
+
 	return (
 		<Slate
 			editor={editor}
@@ -78,6 +123,9 @@ const EditorComponent: React.FC<EditorProps> = ({
 					<InsertBadgeButton />
 					<InsertImageButton />
 				</div>
+				<div className="flex flex-row gap-x-3 border-r pr-2">
+					<SearchInput setSearch={setSearch} />
+				</div>
 			</Toolbar>
 			<HoveringToolbar />
 			{/* editable component */}
@@ -88,37 +136,14 @@ const EditorComponent: React.FC<EditorProps> = ({
 					className="outline-none"
 					renderElement={renderElement}
 					renderLeaf={renderLeaf}
+					decorate={decorate}
 					// when user inputs &, change it to 'and'
 					onKeyDown={(event) => {
-						if (!event.ctrlKey) return false;
-						for (const hotkey in HOTKEYS) {
-							if (isHotkey(hotkey, event)) {
-								event.preventDefault();
-								const mark = HOTKEYS[hotkey];
-								CustomEditor.mark.toggleMark(editor, mark);
-							}
-						}
+						toggleMarkFromKb(event, editor);
 
-						const { selection } = editor;
-						if (selection && Range.isCollapsed(selection)) {
-							const { nativeEvent } = event;
-							if (isKeyHotkey("left", nativeEvent)) {
-								event.preventDefault();
-								Transforms.move(editor, { unit: "offset", reverse: true });
-								return;
-							}
+						modifyInlineCursor(event, editor);
 
-							if (isKeyHotkey("right", nativeEvent)) {
-								event.preventDefault();
-								Transforms.move(editor, { unit: "offset" });
-								return;
-							}
-						}
-
-						if (isHotkey("mod+a", event)) {
-							event.preventDefault();
-							Transforms.select(editor, []);
-						}
+						selectText(event, editor);
 					}}
 					onDOMBeforeInput={(event: InputEvent) => {
 						switch (event.inputType) {

@@ -28,6 +28,7 @@ const CheckListItem: React.FC<RenderElementProps> = ({
 				<input
 					className="cursor-pointer"
 					type="checkbox"
+					checked={checked}
 					onChange={(event) => {
 						const path = ReactEditor.findPath(editor, element);
 						const newProperties: Partial<Element> = {
