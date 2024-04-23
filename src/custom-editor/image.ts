@@ -8,11 +8,22 @@ export const ImageMethods = {
 		if (!url) return false;
 		if (!isUrl(url)) return false;
 
+		let isImage = false;
+		try {
+			isImage = (await ImageMethods.validUrl(url)) as boolean;
+		} catch (error) {
+			isImage = false;
+		}
+
+		return isImage;
+	},
+	// function to load image url
+	validUrl(url: string) {
+		const img = new Image();
+		img.src = url;
 		return new Promise((resolve) => {
-			const img = new Image();
-			img.onload = () => resolve(true);
 			img.onerror = () => resolve(false);
-			img.src = url;
+			img.onload = () => resolve(true);
 		});
 	},
 

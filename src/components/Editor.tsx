@@ -20,6 +20,7 @@ import BlockButton from "./toolbar-buttons/BlockButton";
 import SearchInput from "./toolbar-buttons/SearchInput";
 import AddLinkButton from "./toolbar-buttons/AddLinkButton";
 import { CustomEditor } from "../custom-editor/custom-editor";
+import EmbedVideoButton from "./toolbar-buttons/EmbedVideoButton";
 import RemoveLinkButton from "./toolbar-buttons/RemoveLinkButton";
 import InsertImageButton from "./toolbar-buttons/InsertImageButton";
 import InsertBadgeButton from "./toolbar-buttons/InsertBadgeButton";
@@ -119,6 +120,9 @@ const EditorComponent: React.FC<EditorProps> = ({
 				<div className="flex flex-row gap-x-3 border-r pr-2">
 					<AddLinkButton />
 					<RemoveLinkButton />
+					<EmbedVideoButton />
+				</div>
+				<div className="flex flex-row gap-x-3 border-r pr-2">
 					<ToggleEditableButton />
 					<InsertBadgeButton />
 					<InsertImageButton />

@@ -1,8 +1,9 @@
 import { RenderElementProps } from "slate-react";
 
 import Image from "./render-elements/Image";
-import CheckListItemElement from "./render-elements/CheckListItemElement";
 import Badge from "./render-elements/Badge";
+import Video from "./render-elements/Video";
+import CheckListItemElement from "./render-elements/CheckListItemElement";
 
 // component to return block html elements
 const Element: React.FC<RenderElementProps> = ({
@@ -107,6 +108,10 @@ const Element: React.FC<RenderElementProps> = ({
 					children={children}
 					element={element}
 				/>
+			);
+		case "video":
+			return (
+				<Video attributes={attributes} children={children} element={element} />
 			);
 		default:
 			return <p {...attributes}>{children}</p>;

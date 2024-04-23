@@ -3,19 +3,17 @@ import { Descendant, createEditor } from "slate";
 import { RenderElementProps, RenderLeafProps, withReact } from "slate-react";
 
 import Leaf from "./components/Leaf";
-import { withHtml } from "./lib/withHtml";
 import useContent from "./hooks/useContent";
-import { withImages } from "./lib/withImages";
-import { withInlines } from "./lib/withInlines";
 import EditorComponent from "./components/Editor";
-import { withCheckLists } from "./lib/withCheckLists";
 import DefaultElement from "./components/DefaultElement";
+import { withCustomFeatures } from "./lib/withCustomFeatures";
 
 function App() {
 	// to make editor to be stable across renders, we use useState without a setter
 	const [editor] = useState(() =>
-		withHtml(withCheckLists(withInlines(withImages(withReact(createEditor())))))
+		withCustomFeatures(withReact(createEditor()))
 	);
+
 	const [content] = useContent();
 
 	// fetching data from localStorage if available

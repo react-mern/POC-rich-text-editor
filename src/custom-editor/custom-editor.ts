@@ -4,6 +4,7 @@ import { EditabelButtonMethods } from "./editable-button";
 import { BlockMethods } from "./block";
 import { ImageMethods } from "./image";
 import { BadgeMethods } from "./badge";
+import { EmbedVideoMethods } from "./embedVideo";
 
 // this consists functions to handler editor updates
 export const CustomEditor = {
@@ -13,4 +14,5 @@ export const CustomEditor = {
 	editableButton: EditabelButtonMethods,
 	image: ImageMethods,
 	badge: BadgeMethods,
+	embedVideo: EmbedVideoMethods,
 };
