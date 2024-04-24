@@ -1,6 +1,11 @@
 import { Editor, Element, Transforms } from "slate";
-import { ElementTypes, TextAlign } from "../types";
-import { CustomEditor } from "./custom-editor";
+
+import {
+	AlignElement,
+	ElementTypes,
+	NonAlignElement,
+	TextAlign,
+} from "../types";
 
 export const LIST_TYPES = ["numbered-list", "bulleted-list"];
 export const TEXT_ALIGN_TYPES = ["left", "right", "center", "justify"];
@@ -20,9 +25,9 @@ export const BlockMethods = {
 				at: Editor.unhangRange(editor, selection),
 				match: (n) => {
 					if (!Editor.isEditor(n) && Element.isElement(n)) {
-						if (CustomEditor.isAlignElement(n)) {
+						if (BlockMethods.isAlignElement(n)) {
 							return n[blockType] === format;
-						} else if (CustomEditor.isNonAlignElement(n)) {
+						} else if (BlockMethods.isNonAlignElement(n)) {
 							return n.type === format;
 						}
 					}
@@ -74,4 +79,6 @@ export const BlockMethods = {
 			Transforms.wrapNodes(editor, block as any);
 		}
 	},
+	isAlignElement: (n: Element): n is AlignElement => "align" in n,
+	isNonAlignElement: (n: Element): n is NonAlignElement => !("align" in n),
 };

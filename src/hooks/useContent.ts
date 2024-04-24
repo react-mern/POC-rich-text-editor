@@ -38,9 +38,49 @@ const useContent = () => {
 					children: [{ text: "A wise quote." }],
 				},
 				{
+					type: "heading-one",
+					children: [{ text: "Heading 1 example" }],
+				},
+				{
+					type: "heading-two",
+					children: [{ text: "Heading 2 example" }],
+				},
+				{
+					type: "heading-two",
+					children: [{ text: "Bullet list example" }],
+				},
+				{
+					type: "bulleted-list",
+					children: [
+						{ type: "list-item", children: [{ text: "This is" }] },
+						{ type: "list-item", children: [{ text: "bullet list" }] },
+					],
+				},
+				{
+					type: "heading-two",
+					children: [{ text: "Numbered list example" }],
+				},
+				{
+					type: "numbered-list",
+					children: [
+						{ type: "list-item", children: [{ text: "This is" }] },
+						{ type: "list-item", children: [{ text: "numbered list" }] },
+					],
+				},
+				{
+					type: "paragraph",
+					align: "left",
+					children: [{ text: "left align text" }],
+				},
+				{
 					type: "paragraph",
 					align: "center",
-					children: [{ text: "Try it out for yourself!" }],
+					children: [{ text: "Centre align text" }],
+				},
+				{
+					type: "paragraph",
+					align: "right",
+					children: [{ text: "Right align text" }],
 				},
 				{
 					type: "paragraph",
@@ -61,10 +101,11 @@ const useContent = () => {
 							children: [{ text: "editable button" }],
 						},
 						{
-							text: "! Here is a read-only inline: ",
+							text: "! Here is an inline badge: ",
 						},
 						{
 							type: "badge",
+							variant: "success",
 							children: [{ text: "Approved" }],
 						},
 						{
@@ -76,7 +117,7 @@ const useContent = () => {
 					type: "paragraph",
 					children: [
 						{
-							text: "There are two ways to add links. You can either add a link via the toolbar icon above, or if you want in on a little secret, copy a URL to your keyboard and paste it while a range of text is selected. ",
+							text: "There are two ways to add links. You can either add a link via the toolbar icon above, or copy a URL to your keyboard and paste it while a range of text is selected. ",
 						},
 						// The following is an example of an inline at the end of a block.
 						// This is an edge case that can cause issues.
@@ -105,7 +146,7 @@ const useContent = () => {
 					type: "paragraph",
 					children: [
 						{
-							text: "This example shows images in action. It features two ways to add images. You can either add an image via the toolbar icon above, or if you want in on a little secret, copy an image URL to your clipboard and paste it anywhere in the editor!",
+							text: "This example shows images in action. It features two ways to add images. You can either add an image via the toolbar icon above, or copy an image URL to your clipboard and paste it anywhere in the editor!",
 						},
 					],
 				},
@@ -122,7 +163,7 @@ const useContent = () => {
 					url: "https://source.unsplash.com/zOwZKwZOZq8",
 					children: [{ text: "" }],
 				},
-				{ type: "paragraph", children: [{ text: "asdasdadasdsa" }] },
+				{ type: "paragraph", children: [{ text: "Check list example" }] },
 				{
 					type: "check-list-item",
 					checked: true,
