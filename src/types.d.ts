@@ -111,21 +111,24 @@ export type CodeLineElement = {
 	children: Descendant[];
 };
 
-export type CustomElement =
+export type AlignElement =
+	| ParagraphElement
 	| BlockQuoteElement
 	| BulledtedListElement
-	| CheckListItemElement
-	| EditableVoidElement
+	| NumberedListElement
 	| HeadingOneElement
 	| HeadingTwoElement
+	| ListItemElement;
+
+export type NonAlignElement =
+	| CheckListItemElement
+	| EditableVoidElement
 	| ImageELement
 	| LinkELement
 	| ButtonElement
 	| BadgeElement
 	| ListItemElement
 	| MentionElement
-	| NumberedListElement
-	| ParagraphElement
 	| TableElement
 	| TableRowElement
 	| TableCellElement
@@ -133,6 +136,8 @@ export type CustomElement =
 	| VideoElement
 	| CodeBlockElement
 	| CodeLineElement;
+
+export type CustomElement = AlignElement | NonAlignElement;
 
 export type ElementTypes =
 	| "paragraph"

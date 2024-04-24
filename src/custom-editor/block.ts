@@ -1,5 +1,6 @@
 import { Editor, Element, Transforms } from "slate";
 import { ElementTypes, TextAlign } from "../types";
+import { CustomEditor } from "./custom-editor";
 
 export const LIST_TYPES = ["numbered-list", "bulleted-list"];
 export const TEXT_ALIGN_TYPES = ["left", "right", "center", "justify"];
@@ -17,10 +18,16 @@ export const BlockMethods = {
 		const [match] = Array.from(
 			Editor.nodes(editor, {
 				at: Editor.unhangRange(editor, selection),
-				match: (n) =>
-					!Editor.isEditor(n) &&
-					Element.isElement(n) &&
-					n[blockType] === format,
+				match: (n) => {
+					if (!Editor.isEditor(n) && Element.isElement(n)) {
+						if (CustomEditor.isAlignElement(n)) {
+							return n[blockType] === format;
+						} else if (CustomEditor.isNonAlignElement(n)) {
+							return n.type === format;
+						}
+					}
+					return false;
+				},
 			})
 		);
 

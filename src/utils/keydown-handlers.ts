@@ -1,6 +1,7 @@
 import isHotkey, { isKeyHotkey } from "is-hotkey";
-import { CustomEditor } from "../custom-editor/custom-editor";
 import { Editor, Range, Transforms } from "slate";
+
+import { CustomEditor } from "../custom-editor/custom-editor";
 
 export const HOTKEYS: { [key: string]: string } = {
 	"mod+b": "bold",
