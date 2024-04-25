@@ -10,13 +10,13 @@ const Video: React.FC<RenderElementProps> = ({
 	return (
 		<div {...attributes}>
 			<div contentEditable={false}>
-				<div className="p-0 pt-[75%] relative">
+				<div className="p-0 w-full relative">
 					<iframe
 						src={url}
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 						referrerPolicy="strict-origin-when-cross-origin"
 						allowFullScreen
-						className="absolute top-0 left-0 max-w-full max-h-80"
+						className="w-1/2 max-w-full h-80 max-h-80"
 					/>
 				</div>
 			</div>

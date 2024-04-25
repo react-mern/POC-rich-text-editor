@@ -1,15 +1,17 @@
-import { useSlate } from "slate-react";
-import { CustomEditor } from "../../custom-editor/custom-editor";
-import { Button } from "../common/Button";
-import { Icon } from "../common/Icon";
 import { useState } from "react";
+import { useSlate } from "slate-react";
+
+import { Icon } from "../common/Icon";
+import Tooltip from "../common/Tooltip";
+import { Button } from "../common/Button";
+import { CustomEditor } from "../../custom-editor/custom-editor";
 
 const InsertBadgeButton = () => {
 	// state to open dropdown for color variant
 	const [dropdownOpen, setDropdownOpen] = useState(false);
 
 	return (
-		<>
+		<Tooltip message="insert-badge">
 			<Button
 				className="relative"
 				onMouseDown={(event: MouseEvent) => {
@@ -21,7 +23,7 @@ const InsertBadgeButton = () => {
 
 				{dropdownOpen && <DropdownMenu />}
 			</Button>
-		</>
+		</Tooltip>
 	);
 };
 
