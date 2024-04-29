@@ -36,7 +36,7 @@ const Element: React.FC<RenderElementProps> = ({
 				<h1
 					style={{ textAlign: element.align }}
 					{...attributes}
-					className="text-2xl my-2"
+					className="text-2xl mb-2 font-semibold"
 				>
 					{children}
 				</h1>
@@ -46,7 +46,7 @@ const Element: React.FC<RenderElementProps> = ({
 				<h2
 					style={{ textAlign: element.align }}
 					{...attributes}
-					className="text-xl"
+					className="text-xl mb-1 font-medium"
 				>
 					{children}
 				</h2>

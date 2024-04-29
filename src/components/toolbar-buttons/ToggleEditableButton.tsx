@@ -5,12 +5,13 @@ import Tooltip from "../common/Tooltip";
 import { Button } from "../common/Button";
 import { CustomEditor } from "../../custom-editor/custom-editor";
 
+// button to add editable button
 const ToggleEditableButton = () => {
 	const editor = useSlate();
 	return (
 		<Tooltip message="toggle-editable-button">
 			<Button
-				active
+				active={CustomEditor.editableButton.isButtonActive(editor)}
 				onMouseDown={(event: MouseEvent) => {
 					event.preventDefault();
 					if (CustomEditor.editableButton.isButtonActive(editor)) {

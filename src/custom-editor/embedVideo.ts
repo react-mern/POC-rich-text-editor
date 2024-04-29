@@ -20,6 +20,7 @@ export const EmbedVideoMethods = {
 		});
 		return result;
 	},
+
 	// to generate embed url of link
 	getEmbedURL(url: string) {
 		let id;
@@ -32,6 +33,7 @@ export const EmbedVideoMethods = {
 		const embedURL = `https://www.youtube.com/embed/${id}`;
 		return embedURL;
 	},
+
 	// insert video in editor
 	insertEmbedVideo(editor: Editor, url: string) {
 		// create empty text

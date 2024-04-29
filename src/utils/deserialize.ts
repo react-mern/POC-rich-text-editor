@@ -7,6 +7,7 @@ interface ElementType {
 		url?: string | null;
 	};
 }
+
 const ELEMENT_TAGS: ElementType = {
 	A: (element) => {
 		if (element instanceof HTMLElement) {

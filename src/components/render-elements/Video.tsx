@@ -1,6 +1,7 @@
 import { RenderElementProps } from "slate-react";
 import { VideoElement } from "../../types";
 
+// element to render video embed
 const Video: React.FC<RenderElementProps> = ({
 	attributes,
 	children,

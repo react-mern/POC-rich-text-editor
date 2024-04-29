@@ -1,19 +1,26 @@
-import { Editor, Element, Node, Point, Range, Transforms } from "slate";
-import { CustomEditor } from "../custom-editor/custom-editor";
 import isUrl from "is-url";
 import { deserialize } from "../utils/deserialize";
+import { CustomEditor } from "../custom-editor/custom-editor";
+import { Editor, Element, Node, Point, Range, Transforms } from "slate";
 
-// overrinding editor methods
+// creating a custom plugin by overriding editor methods,
+// to handle inline links, buttons and badges,
+// to handle image, youtube embed insertion by copying link into editor
+// to handler check-list deletion
 export const withCustomFeatures = (editor: Editor) => {
+	// extracting editor methods
 	const { insertData, isVoid, insertText, isInline, deleteBackward } = editor;
 
+	// overrinding isVoid to return image and video type elements as void elements
 	editor.isVoid = (element) => {
 		return ["image", "video"].includes(element.type) ? true : isVoid(element);
 	};
 
+	// overriding isLine to return link, button and badge as inline elements
 	editor.isInline = (element: Element) =>
 		["link", "button", "badge"].includes(element.type) || isInline(element);
 
+	// when text is inserted and it is a URL, make it a link, else insert normal text
 	editor.insertText = (text: string) => {
 		if (text && isUrl(text)) {
 			CustomEditor.link.wrapLink(editor, text);

@@ -7,6 +7,7 @@ const Badge: React.FC<RenderElementProps> = ({
 	children,
 	element,
 }) => {
+	// display badge color according to tag
 	const colorMap = {
 		success: "bg-green-500",
 		error: "bg-red-500",

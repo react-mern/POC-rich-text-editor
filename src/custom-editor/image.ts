@@ -17,6 +17,7 @@ export const ImageMethods = {
 
 		return isImage;
 	},
+
 	// function to load image url
 	validUrl(url: string) {
 		const img = new Image();

@@ -1,8 +1,9 @@
-import { useEffect, useRef } from "react";
 import { Editor, Range } from "slate";
+import { useEffect, useRef } from "react";
 import { useFocused, useSlate } from "slate-react";
-import Portal from "./common/Portal";
+
 import Menu from "./common/Menu";
+import Portal from "./common/Portal";
 import MarkButton from "./toolbar-buttons/MarkButton";
 
 // component for a hovering toolbar
@@ -28,7 +29,7 @@ const HoveringToolbar = () => {
 			return;
 		}
 
-		// if not selected, not in focus, text selection get 0, then remove style attribute
+		// if not selected, not in focus, text selection is 0, then remove style attribute
 		if (
 			!selection ||
 			!inFocus ||

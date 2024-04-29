@@ -11,7 +11,9 @@ const AddLinkButton = () => {
 	return (
 		<Tooltip message="add-link">
 			<Button
+				// active state of button
 				active={CustomEditor.link.isLinkActive(editor)}
+				// prompt for link then insert link
 				onMouseDown={(event: MouseEvent) => {
 					event?.preventDefault();
 					const url = window.prompt("Enter URL of the link");

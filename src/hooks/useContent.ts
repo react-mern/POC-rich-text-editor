@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { Descendant, type Editor as EditorType } from "slate";
 
+// hook to define initial content and store content in localStorage
 const useContent = () => {
 	// to return stored content or initial value
 	const content: Descendant[] = useMemo(() => {

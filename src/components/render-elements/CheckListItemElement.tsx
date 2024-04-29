@@ -30,6 +30,7 @@ const CheckListItem: React.FC<RenderElementProps> = ({
 					type="checkbox"
 					checked={checked}
 					onChange={(event) => {
+						// changing checked state in editor content
 						const path = ReactEditor.findPath(editor, element);
 						const newProperties: Partial<Element> = {
 							checked: event.target.checked,
