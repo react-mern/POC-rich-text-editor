@@ -4,99 +4,72 @@ import {
 	RenderLeafProps,
 	Slate,
 } from "slate-react";
-import { useCallback, useState } from "react";
-import { Editor, Descendant, NodeEntry, Text, Path } from "slate";
+import { Editor } from "slate";
 
 import {
 	modifyInlineCursor,
 	selectText,
 	toggleMarkFromKb,
 } from "../utils/keydown-handlers";
+import {
+	MarkButton,
+	BlockButton,
+	AddLinkButton,
+	EmbedVideoButton,
+	RemoveLinkButton,
+	InsertBadgeButton,
+	InsertImageButton,
+	ToggleEditableButton,
+	SearchInput,
+} from "./toolbar-buttons";
 import Toolbar from "./Toolbar";
-import useContent from "../hooks/useContent";
 import HoveringToolbar from "./HoveringToolbar";
-import MarkButton from "./toolbar-buttons/MarkButton";
-import BlockButton from "./toolbar-buttons/BlockButton";
-import SearchInput from "./toolbar-buttons/SearchInput";
-import AddLinkButton from "./toolbar-buttons/AddLinkButton";
+import { useDecorate } from "../hooks/useDecorate";
+import { storeContent } from "../store/editorSlice";
 import { CustomEditor } from "../custom-editor/custom-editor";
-import EmbedVideoButton from "./toolbar-buttons/EmbedVideoButton";
-import RemoveLinkButton from "./toolbar-buttons/RemoveLinkButton";
-import InsertImageButton from "./toolbar-buttons/InsertImageButton";
-import InsertBadgeButton from "./toolbar-buttons/InsertBadgeButton";
-import ToggleEditableButton from "./toolbar-buttons/ToggleEditableButton";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 interface EditorProps {
-	initialValue: Descendant[];
 	editor: Editor;
 	renderElement: (props: RenderElementProps) => JSX.Element;
 	renderLeaf: (props: RenderLeafProps) => JSX.Element;
 }
 
-type Range = {
-	anchor: {
-		path: Path;
-		offset: number;
-	};
-	focus: { path: Path; offset: number };
-	highlight: boolean;
-};
-
-type Ranges = Range[];
-
 const EditorComponent: React.FC<EditorProps> = ({
 	editor,
-	initialValue,
 	renderElement,
 	renderLeaf,
 }) => {
-	// to store content in localStorage
-	const [, storeContent] = useContent();
+	const dispatch = useAppDispatch();
 
-	// state to store input text
-	const [search, setSearch] = useState<string | undefined>("");
+	// custom hook to highlight searched text
+	const { setSearch, decorate } = useDecorate();
 
-	// function to decorate searched text
-	const decorate = useCallback(
-		([node, path]: NodeEntry) => {
-			const ranges: Ranges = [];
-			// if user has searched text and the node corresponds to text
-			if (search && Text.isText(node)) {
-				// extracting text from node
-				const { text } = node;
+	// getting current editor from store
+	const currentEditor = useAppSelector((state) => state.editors.currentEditor);
 
-				// splitting text according to searched text
-				const parts = text.split(search);
-				let offset = 0;
-
-				// iterating over parts	and pushing positions to ranges for highlighting using anchor and focus
-				parts.forEach((part, i) => {
-					if (i !== 0) {
-						// adding positions tof searched text to highlight
-						ranges.push({
-							anchor: { path, offset: offset - search.length },
-							focus: { path, offset },
-							highlight: true,
-						});
-					}
-
-					// we skip the first part and add the offset the length of part, length of searched text to offset
-					offset = offset + part.length + search.length;
-				});
-			}
-			return ranges;
-		},
-		[search]
-	);
+	if (!currentEditor) {
+		return <div>Loading</div>;
+	}
 
 	return (
-		//  render the slate context, must be rendered above any editable components,
+		// render the slate context, must be rendered above any editable components,
 		//  it can provide editor state to other components like toolbars, menus
 		<Slate
 			editor={editor}
-			initialValue={initialValue}
-			// store value to localStorage on change
-			onChange={(value) => storeContent(value, editor)}
+			key={currentEditor.id}
+			initialValue={currentEditor.value}
+			// dispatch action to store value in localStorage on change
+			onChange={(value) =>
+				dispatch(
+					storeContent({
+						id: currentEditor.id,
+						title: currentEditor.title,
+						value,
+						editor,
+					})
+				)
+			}
 		>
 			{/* Toolbar */}
 			<Toolbar>
@@ -149,10 +122,10 @@ const EditorComponent: React.FC<EditorProps> = ({
 				<Editable
 					spellCheck
 					autoFocus
-					className="outline-none max-h-[730px] overflow-y-auto"
-					renderElement={renderElement}
-					renderLeaf={renderLeaf}
 					decorate={decorate}
+					renderLeaf={renderLeaf}
+					renderElement={renderElement}
+					className="outline-none max-h-[730px] overflow-y-auto"
 					onKeyDown={(event) => {
 						// adding formatting using keyboard shortcuts
 						toggleMarkFromKb(event, editor);
