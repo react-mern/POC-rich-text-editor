@@ -64,7 +64,6 @@ const EditorComponent: React.FC<EditorProps> = ({
 				dispatch(
 					storeContent({
 						id: currentEditor.id,
-						title: currentEditor.title,
 						value,
 						editor,
 					})

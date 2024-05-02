@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 * {
-	@apply p-0 m-0 box-content;
+	@apply p-0 m-0 box-border;
 }

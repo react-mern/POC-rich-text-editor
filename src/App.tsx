@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import { RenderElementProps, RenderLeafProps, withReact } from "slate-react";
 
 import Leaf from "./components/Leaf";
+import Title from "./components/Title";
 import { useAppSelector } from "./store/hooks";
 import EditorComponent from "./components/Editor";
 import Element from "./components/DefaultElement";
@@ -32,18 +33,14 @@ function App() {
 
 	return (
 		<div className="h-full flex">
-			<div className="flex h-screen w-60 flex-col inset-y-0">
+			<div className="flex h-screen w-60 flex-col">
 				<div className="h-full text-primary w-full bg-white">
 					<NavigationSidebar slateEditor={editor} />
 				</div>
 			</div>
 			<main className="w-full">
 				<div className="bg-sky-200 flex flex-col h-screen w-full">
-					<div className="text-center mt-4">
-						<h1 className="text-xl text-zinc-800 font-semibold">
-							{currentEditor?.title}
-						</h1>
-					</div>
+					<Title />
 					<div className="bg-white mx-auto rounded-md my-10 w-4/5">
 						{currentEditor && (
 							<EditorComponent

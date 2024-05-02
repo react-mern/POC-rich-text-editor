@@ -1,6 +1,12 @@
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { addNewEditor, setCurrentEditor } from "../store/editorSlice";
 import { Editor } from "slate";
+import { Edit, Plus } from "lucide-react";
+
+import {
+	addNewEditor,
+	setCurrentEditor,
+	setNewTitle,
+} from "../store/editorSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 const NavigationSidebar = ({ slateEditor }: { slateEditor: Editor }) => {
 	// getting states from store
@@ -10,7 +16,7 @@ const NavigationSidebar = ({ slateEditor }: { slateEditor: Editor }) => {
 	const dispatch = useAppDispatch();
 
 	return (
-		<div className="flex flex-col gap-y-4 items-center">
+		<div className="flex flex-col gap-y-4 items-center w-60">
 			<div className="text-center py-4 px-2 border-b-2 w-full">
 				<h3 className="font-semibold text-xl text-indigo-500">Editors list</h3>
 			</div>
@@ -19,9 +25,9 @@ const NavigationSidebar = ({ slateEditor }: { slateEditor: Editor }) => {
 					{editors.map((editor) => (
 						<li key={editor.id}>
 							<button
-								className={`w-full py-2 border-b hover:bg-indigo-100 text-center ${
-									currentEditor!.id === editor.id ? "bg-indigo-200" : ""
-								}`}
+								className={`group px-2 py-2  hover:bg-zinc-200 text-center transition text-zinc-600 border-b w-full flex items-center justify-between ${
+									currentEditor!.id === editor.id ? "bg-zinc-300" : ""
+								} `}
 								// dispatching action to set current editor
 								onClick={() => {
 									dispatch(
@@ -29,17 +35,35 @@ const NavigationSidebar = ({ slateEditor }: { slateEditor: Editor }) => {
 									);
 								}}
 							>
-								{editor.title}
+								<p className="text-ellipsis">{editor.title}</p>
+
+								{/* to edit title of editor */}
+								<Edit
+									className="w-4 h-4 hover:text-zinc-900 scale-0 group-hover:scale-100 transition-all"
+									onClick={(e) => {
+										// stop from opening the editor
+										e.stopPropagation();
+
+										// prompt user for a new title
+										const newTitle = prompt("Enter new title");
+
+										if (newTitle) {
+											// dispatching action to set new title
+											dispatch(setNewTitle({ id: editor.id, newTitle }));
+										}
+									}}
+								/>
 							</button>
 						</li>
 					))}
 				</ol>
 				<button
-					className="border-b py-2 w-full hover:bg-indigo-100"
+					className="border-b px-2 py-2 flex items-center justify-between w-full hover:bg-zinc-200 text-zinc-600 transition"
 					// dispatching action to add new blank editor
 					onClick={() => dispatch(addNewEditor({ editor: slateEditor }))}
 				>
-					New blank editor
+					Add editor
+					<Plus className="w-4 h-4" />
 				</button>
 			</div>
 		</div>

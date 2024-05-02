@@ -86,29 +86,10 @@ export type MentionElement = {
 
 export type LinkELement = { type: "link"; url: string; children: Descendant[] };
 
-export type TableElement = { type: "table"; children: TableRow[] };
-
-export type TableCellElement = { type: "table-cell"; children: CustomText[] };
-
-export type TableRowElement = { type: "table-row"; children: TableCell[] };
-
-export type TitleElement = { type: "title"; children: Descendant[] };
-
 export type VideoElement = {
 	type: "video";
 	url: string;
 	children: EmptyText[];
-};
-
-export type CodeBlockElement = {
-	type: "code-block";
-	language: string;
-	children: Descendant[];
-};
-
-export type CodeLineElement = {
-	type: "code-line";
-	children: Descendant[];
 };
 
 export type AlignElement =
@@ -129,13 +110,7 @@ export type NonAlignElement =
 	| BadgeElement
 	| ListItemElement
 	| MentionElement
-	| TableElement
-	| TableRowElement
-	| TableCellElement
-	| TitleElement
-	| VideoElement
-	| CodeBlockElement
-	| CodeLineElement;
+	| VideoElement;
 
 export type CustomElement = AlignElement | NonAlignElement;
 
@@ -154,13 +129,7 @@ export type ElementTypes =
 	| "list-item"
 	| "mention"
 	| "link"
-	| "table"
-	| "table-cell"
-	| "table-row"
-	| "title"
-	| "video"
-	| "code-block"
-	| "code-line";
+	| "video";
 
 export type CustomText = {
 	text: string;

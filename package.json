@@ -14,7 +14,7 @@
     "image-extensions": "^1.1.0",
     "is-hotkey": "^0.2.0",
     "is-url": "^1.2.4",
-    "prismjs": "^1.29.0",
+    "lucide-react": "^0.377.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.1.2",

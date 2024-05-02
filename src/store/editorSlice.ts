@@ -129,12 +129,10 @@ export const editorsSlice = createSlice({
 			state,
 			action: PayloadAction<{
 				id: string;
-				title: string;
 				value: Descendant[];
 				editor: Editor;
 			}>
 		) => {
-			const title = action.payload.title;
 			const value = action.payload.value;
 
 			// boolean to check if changes made are other than selection
@@ -149,7 +147,7 @@ export const editorsSlice = createSlice({
 					const updatedEditors = state.editors.map((editor) => {
 						// if editor is found, assign new title and content to the specific editor using id
 						if (editor.id === action.payload.id) {
-							return { ...editor, title, value };
+							return { ...editor, value };
 						}
 						return editor;
 					});
@@ -162,6 +160,31 @@ export const editorsSlice = createSlice({
 				}
 			}
 		},
+
+		// action to set new title for editor
+		setNewTitle: (
+			state,
+			action: PayloadAction<{ id: String; newTitle: string }>
+		) => {
+			// find the editor using id and set it's new title
+			const updatedEditors = state.editors.map((editor) => {
+				if (editor.id === action.payload.id) {
+					return { ...editor, title: action.payload.newTitle };
+				}
+				return editor;
+			});
+
+			// update editors in store
+			state.editors = updatedEditors;
+
+			// set editors in localStorage
+			localStorage.setItem("editorsRedux", JSON.stringify(state.editors));
+
+			// if updated title is of currentEditor, change it's title
+			if (state.currentEditor?.id === action.payload.id) {
+				state.currentEditor.title = action.payload.newTitle;
+			}
+		},
 	},
 });
 
@@ -170,6 +193,7 @@ export const {
 	setCurrentEditor,
 	loadEditorsFromLocalStorage,
 	storeContent,
+	setNewTitle,
 } = editorsSlice.actions;
 
 export default editorsSlice.reducer;
