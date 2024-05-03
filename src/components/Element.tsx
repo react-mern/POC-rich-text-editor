@@ -16,6 +16,7 @@ const Element: React.FC<RenderElementProps> = ({
 			return (
 				<blockquote
 					style={{ textAlign: element.align }}
+					{...attributes}
 					className="p-2 my-2 bg-gray-50 border-l-4 border-gray-900 text-base italic leading-relaxed text-gray-700"
 				>
 					{children}

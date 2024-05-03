@@ -4,8 +4,8 @@ import { RenderElementProps, RenderLeafProps, withReact } from "slate-react";
 
 import Leaf from "./components/Leaf";
 import Title from "./components/Title";
+import Element from "./components/Element";
 import EditorComponent from "./components/Editor";
-import Element from "./components/DefaultElement";
 import { withCustomFeatures } from "./lib/withCustomFeatures";
 import NavigationSidebar from "./components/NavigationSidebar";
 
