@@ -56,7 +56,7 @@ export const editorsSlice = createSlice({
 	reducers: {
 		// action to add new blank editor
 		addNewEditor: (state, action: PayloadAction<{ editor: Editor }>) => {
-			// defining new editor object
+			// defining new editor object,
 			const newEditor: EditorInstance = {
 				id: `editor${state.editors.length + 1}`,
 				title: `Editor ${state.editors.length + 1}`,
@@ -67,7 +67,7 @@ export const editorsSlice = createSlice({
 			state.editors.push(newEditor);
 
 			// setting editors in localStorage
-			localStorage.setItem("editorsRedux", JSON.stringify(state.editors));
+			localStorage.setItem("editors", JSON.stringify(state.editors));
 
 			// moving cursor to first position of editor
 			Transforms.select(action.payload.editor, { path: [0, 0], offset: 0 });
@@ -99,17 +99,18 @@ export const editorsSlice = createSlice({
 		// action to load editors from localStorage or set into localStorage
 		loadEditorsFromLocalStorage: (state) => {
 			// get editors from localStorage
-			const storedEditors = localStorage.getItem("editorsRedux");
+			const storedEditors = localStorage.getItem("editors");
 
 			// if found, set state of editors and currentEditor
 			if (storedEditors) {
 				state.editors = JSON.parse(storedEditors);
 				state.currentEditor = state.editors[0];
 			} else {
-				// if not found, initialize an instace
+				// if not found, initialize an instace,
+				// using hardcoded id for example purpose, use uid generators for real-world use case.
 				const initialEditor: EditorInstance = {
 					id: "editor1",
-					title: "Untitled",
+					title: "Editor 1",
 					value: initialValue,
 				};
 
@@ -120,7 +121,7 @@ export const editorsSlice = createSlice({
 				state.currentEditor = initialEditor;
 
 				// store editors array in localStorage
-				localStorage.setItem("editorsRedux", JSON.stringify(state.editors));
+				localStorage.setItem("editors", JSON.stringify(state.editors));
 			}
 		},
 
@@ -156,7 +157,7 @@ export const editorsSlice = createSlice({
 					state.editors = updatedEditors;
 
 					// store updated editors in localStorage
-					localStorage.setItem("editorsRedux", JSON.stringify(state.editors));
+					localStorage.setItem("editors", JSON.stringify(state.editors));
 				}
 			}
 		},
@@ -178,7 +179,7 @@ export const editorsSlice = createSlice({
 			state.editors = updatedEditors;
 
 			// set editors in localStorage
-			localStorage.setItem("editorsRedux", JSON.stringify(state.editors));
+			localStorage.setItem("editors", JSON.stringify(state.editors));
 
 			// if updated title is of currentEditor, change it's title
 			if (state.currentEditor?.id === action.payload.id) {
@@ -193,7 +194,7 @@ export const editorsSlice = createSlice({
 				(editor) => editor.id !== action.payload
 			);
 			// set updated editors in localStorage
-			localStorage.setItem("editorsRedux", JSON.stringify(state.editors));
+			localStorage.setItem("editors", JSON.stringify(state.editors));
 
 			// if deleted editor is currentEditor as well, change currentEditor to first editor in array,
 			// if no editors left, set currenEditor as null
