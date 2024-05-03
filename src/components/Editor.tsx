@@ -48,7 +48,13 @@ const EditorComponent: React.FC<EditorProps> = ({
 	const currentEditor = useAppSelector((state) => state.editors.currentEditor);
 
 	if (!currentEditor) {
-		return <div>Loading</div>;
+		return (
+			<div>
+				<h2 className="text-center py-2 text-xl font-semibold">
+					No editors, add one using the sidebar
+				</h2>
+			</div>
+		);
 	}
 
 	return (

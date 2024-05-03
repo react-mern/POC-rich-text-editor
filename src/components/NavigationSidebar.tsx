@@ -1,8 +1,9 @@
 import { Editor } from "slate";
-import { Edit, Plus } from "lucide-react";
+import { Edit, Plus, Trash } from "lucide-react";
 
 import {
 	addNewEditor,
+	deleteEditor,
 	setCurrentEditor,
 	setNewTitle,
 } from "../store/editorSlice";
@@ -37,22 +38,35 @@ const NavigationSidebar = ({ slateEditor }: { slateEditor: Editor }) => {
 							>
 								<p className="text-ellipsis">{editor.title}</p>
 
-								{/* to edit title of editor */}
-								<Edit
-									className="w-4 h-4 hover:text-zinc-900 scale-0 group-hover:scale-100 transition-all"
-									onClick={(e) => {
-										// stop from opening the editor
-										e.stopPropagation();
+								<div className="flex gap-x-2">
+									{/* to edit title of editor */}
+									<Edit
+										className="w-4 h-4 hover:text-zinc-900 scale-0 group-hover:scale-100 transition-all"
+										onClick={(e) => {
+											// stop from opening the editor
+											e.stopPropagation();
 
-										// prompt user for a new title
-										const newTitle = prompt("Enter new title");
+											// prompt user for a new title
+											const newTitle = prompt("Enter new title");
 
-										if (newTitle) {
-											// dispatching action to set new title
-											dispatch(setNewTitle({ id: editor.id, newTitle }));
-										}
-									}}
-								/>
+											if (newTitle) {
+												// dispatching action to set new title
+												dispatch(setNewTitle({ id: editor.id, newTitle }));
+											}
+										}}
+									/>
+
+									{/* to delete the editor */}
+									<Trash
+										className="w-4 h-4 hover:text-zinc-900 scale-0 group-hover:scale-100 transition-all"
+										onClick={(e) => {
+											e.stopPropagation();
+
+											// dispatching action to delete editor
+											dispatch(deleteEditor(editor.id));
+										}}
+									/>
+								</div>
 							</button>
 						</li>
 					))}

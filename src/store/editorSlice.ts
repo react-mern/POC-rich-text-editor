@@ -88,7 +88,7 @@ export const editorsSlice = createSlice({
 
 			// if selected editor found
 			if (selectedEditor) {
-				// move cursion to first position of editor
+				// move cursor to first position of editor
 				Transforms.select(action.payload.editor, { path: [0, 0], offset: 0 });
 
 				// making selected editor the current editor
@@ -185,6 +185,23 @@ export const editorsSlice = createSlice({
 				state.currentEditor.title = action.payload.newTitle;
 			}
 		},
+
+		// action to delete editor
+		deleteEditor: (state, action: PayloadAction<string>) => {
+			// filter out the deleted editor
+			state.editors = state.editors.filter(
+				(editor) => editor.id !== action.payload
+			);
+			// set updated editors in localStorage
+			localStorage.setItem("editorsRedux", JSON.stringify(state.editors));
+
+			// if deleted editor is currentEditor as well, change currentEditor to first editor in array,
+			// if no editors left, set currenEditor as null
+			if (state.currentEditor && state.currentEditor.id === action.payload) {
+				state.currentEditor =
+					state.editors.length > 0 ? state.editors[0] : null;
+			}
+		},
 	},
 });
 
@@ -194,6 +211,7 @@ export const {
 	loadEditorsFromLocalStorage,
 	storeContent,
 	setNewTitle,
+	deleteEditor,
 } = editorsSlice.actions;
 
 export default editorsSlice.reducer;

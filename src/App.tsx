@@ -4,17 +4,15 @@ import { RenderElementProps, RenderLeafProps, withReact } from "slate-react";
 
 import Leaf from "./components/Leaf";
 import Title from "./components/Title";
-import { useAppSelector } from "./store/hooks";
 import EditorComponent from "./components/Editor";
 import Element from "./components/DefaultElement";
 import { withCustomFeatures } from "./lib/withCustomFeatures";
 import NavigationSidebar from "./components/NavigationSidebar";
 
 function App() {
-	// get current editor from store
-	const currentEditor = useAppSelector((state) => state.editors.currentEditor);
-
-	// to make editor to be stable across renders, we use useMemo hook
+	// to make editor to be stable across renders, we use useMemo hook and create an editor
+	// which is wrapped by reactEditor to work it with react
+	// and again wrapped by our withCustomFeatures plugin to provide additional features
 	const editor = useMemo(
 		() => withCustomFeatures(withReact(createEditor())),
 		[]
@@ -44,13 +42,11 @@ function App() {
 				<div className="bg-sky-200 flex flex-col h-screen w-full">
 					<Title />
 					<div className="bg-white mx-auto rounded-md my-10 w-4/5">
-						{currentEditor && (
-							<EditorComponent
-								editor={editor}
-								renderElement={renderElement}
-								renderLeaf={renderLeaf}
-							/>
-						)}
+						<EditorComponent
+							editor={editor}
+							renderElement={renderElement}
+							renderLeaf={renderLeaf}
+						/>
 					</div>
 				</div>
 			</main>
