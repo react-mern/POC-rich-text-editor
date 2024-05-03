@@ -127,7 +127,7 @@ const EditorComponent: React.FC<EditorProps> = ({
 						// adding formatting using keyboard shortcuts
 						toggleMarkFromKb(event, editor);
 
-						// modifying cursor for inline elements
+						// modifying cursor for inline elements such as badge
 						modifyInlineCursor(event, editor);
 
 						// select text using keyboard shortcut

@@ -14,8 +14,7 @@ function App() {
 	// get current editor from store
 	const currentEditor = useAppSelector((state) => state.editors.currentEditor);
 
-	// to make editor to be stable across renders, we use useState without a setter
-	// for more reference
+	// to make editor to be stable across renders, we use useMemo hook
 	const editor = useMemo(
 		() => withCustomFeatures(withReact(createEditor())),
 		[]

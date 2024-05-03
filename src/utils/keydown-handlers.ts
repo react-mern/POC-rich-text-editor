@@ -31,14 +31,19 @@ export const modifyInlineCursor = (
 	editor: Editor
 ) => {
 	const { selection } = editor;
+
+	// check for selection in editor
 	if (selection && Range.isCollapsed(selection)) {
 		const { nativeEvent } = event;
+
+		// move cursor outside badge element on left
 		if (isKeyHotkey("left", nativeEvent)) {
 			event.preventDefault();
 			Transforms.move(editor, { unit: "offset", reverse: true });
 			return;
 		}
 
+		// move cursor outside badge element on right
 		if (isKeyHotkey("right", nativeEvent)) {
 			event.preventDefault();
 			Transforms.move(editor, { unit: "offset" });
