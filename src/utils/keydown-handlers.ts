@@ -25,7 +25,7 @@ export const toggleMarkFromKb = (
 	}
 };
 
-// allowing users to set cursor outside badge, editable button
+// allowing users to set cursor outside badge
 export const modifyInlineCursor = (
 	event: React.KeyboardEvent<HTMLDivElement>,
 	editor: Editor

@@ -16,9 +16,9 @@ export const withCustomFeatures = (editor: Editor) => {
 		return ["image", "video"].includes(element.type) ? true : isVoid(element);
 	};
 
-	// overriding isLine to return link, button and badge as inline elements
+	// overriding isLine to return link, and badge as inline elements
 	editor.isInline = (element: Element) =>
-		["link", "button", "badge"].includes(element.type) || isInline(element);
+		["link", "badge"].includes(element.type) || isInline(element);
 
 	// when text is inserted and it is a URL, make it a link, else insert normal text
 	editor.insertText = (text: string) => {

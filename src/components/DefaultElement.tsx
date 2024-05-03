@@ -83,16 +83,6 @@ const Element: React.FC<RenderElementProps> = ({
 					{children}
 				</a>
 			);
-		case "button":
-			return (
-				<span
-					{...attributes}
-					onClick={(event) => event.preventDefault()}
-					className="my-0 mx-1 bg-neutral-200 py-0.5 px-1 border rounded-md text-base"
-				>
-					{children}
-				</span>
-			);
 		case "badge":
 			return (
 				<Badge attributes={attributes} children={children} element={element} />

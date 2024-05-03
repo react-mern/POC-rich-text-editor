@@ -64,8 +64,6 @@ export type ImageELement = {
 	children: EmptyText[];
 };
 
-export type ButtonElement = { type: "button"; children: Descendant[] };
-
 export type BadgeElement = {
 	type: "badge";
 	children: Descendant[];
@@ -106,7 +104,6 @@ export type NonAlignElement =
 	| EditableVoidElement
 	| ImageELement
 	| LinkELement
-	| ButtonElement
 	| BadgeElement
 	| ListItemElement
 	| MentionElement
@@ -124,7 +121,6 @@ export type ElementTypes =
 	| "heading-one"
 	| "heading-two"
 	| "image"
-	| "button"
 	| "badge"
 	| "list-item"
 	| "mention"

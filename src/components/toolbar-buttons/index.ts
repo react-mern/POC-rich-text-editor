@@ -6,7 +6,6 @@ import InsertImageButton from "./InsertImageButton";
 import MarkButton from "./MarkButton";
 import RemoveLinkButton from "./RemoveLinkButton";
 import SearchInput from "./SearchInput";
-import ToggleEditableButton from "./ToggleEditableButton";
 
 export {
 	MarkButton,
@@ -16,6 +15,5 @@ export {
 	RemoveLinkButton,
 	InsertImageButton,
 	InsertBadgeButton,
-	ToggleEditableButton,
 	SearchInput,
 };

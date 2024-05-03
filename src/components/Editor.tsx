@@ -19,7 +19,6 @@ import {
 	RemoveLinkButton,
 	InsertBadgeButton,
 	InsertImageButton,
-	ToggleEditableButton,
 	SearchInput,
 } from "./toolbar-buttons";
 import Toolbar from "./Toolbar";
@@ -106,7 +105,6 @@ const EditorComponent: React.FC<EditorProps> = ({
 				</div>
 				{/* Inline button, badge, Image buttons */}
 				<div className="flex flex-row gap-x-3 border-r pr-2">
-					<ToggleEditableButton />
 					<InsertBadgeButton />
 					<InsertImageButton />
 				</div>

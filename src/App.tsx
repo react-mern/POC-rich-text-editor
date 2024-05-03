@@ -1,5 +1,5 @@
 import { createEditor } from "slate";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { RenderElementProps, RenderLeafProps, withReact } from "slate-react";
 
 import Leaf from "./components/Leaf";
@@ -16,7 +16,10 @@ function App() {
 
 	// to make editor to be stable across renders, we use useState without a setter
 	// for more reference
-	const [editor] = useState(withCustomFeatures(withReact(createEditor())));
+	const editor = useMemo(
+		() => withCustomFeatures(withReact(createEditor())),
+		[]
+	);
 
 	// defining a rendering function based on the element passed to 'props',
 	// useCallback here to memoize the function for subsequent renders.
