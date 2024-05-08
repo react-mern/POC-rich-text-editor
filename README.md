@@ -1,6 +1,6 @@
 # Text Editor POC
 
-This project is a proof-of-concept (POC) text editor built using React, Vite, Slate.js, and TypeScript.
+### This project is a proof-of-concept (POC) text editor built using React, Vite, Slate.js, and TypeScript.
 
 ## Features
 - **Bold**, *Italic*, Underline, `Code`
@@ -13,6 +13,45 @@ This project is a proof-of-concept (POC) text editor built using React, Vite, Sl
 - Insert badges
 - Search Text Through Editor
 - > Block Quote
+
+**Editor preview:**
+![Screenshot from 2024-05-08 09-59-03](https://github.com/VatsalDave2102/react-text-editor/assets/124878757/8e8544b7-bd34-4b63-8a64-78b3f2e54e7b)
+
+## Usage
+
+### Installation
+
+1. Clone the repository:
+```
+git clone https://github.com/VatsalDave2102/react-text-editor.git
+```
+2. Navigate to the project directory:
+```
+cd react-text-editor
+```
+3. Install dependencies:
+```
+npm install
+```
+
+### Development
+
+Run the development server:
+
+```bash
+npm run dev
+```
+Open http://localhost:3000 to view the editor in your browser.
+
+### Production
+
+To build for production:
+```bash
+npm run build
+```
+
+### Live Demo
+The project is hosted here: https://react-slate-text-editor.netlify.app/
 
 ## How to integrate it in your project
 
@@ -258,29 +297,4 @@ To store the content of the editor, use the `onChange` event available in the `S
   <Editable />
 </Slate>
 ```
-## Usage
 
-### Installation
-
-1. Clone the repository: `git clone https://github.com/VatsalDave2102/react-text-editor.git`
-2. Navigate to the project directory
-3. Install dependencies: `npm install`
-
-### Development
-
-Run the development server:
-
-```bash
-npm run dev
-```
-Open http://localhost:3000 to view the editor in your browser.
-
-### Production
-
-To build for production:
-```bash
-npm run build
-```
-
-### Live Demo
-The project is hosted here: https://react-slate-text-editor.netlify.app/
