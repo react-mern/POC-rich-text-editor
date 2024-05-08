@@ -23,11 +23,11 @@
 
 1. Clone the repository:
 ```
-git clone https://github.com/VatsalDave2102/react-text-editor.git
+git clone https://github.com/react-mern/POC-rich-text-editor.git
 ```
 2. Navigate to the project directory:
 ```
-cd react-text-editor
+cd POC-rich-text-editor
 ```
 3. Install dependencies:
 ```
